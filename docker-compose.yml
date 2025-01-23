@@ -9,13 +9,38 @@ services:
     ports:
       - '3000:3000'
     environment:
-      - DB_HOST=192.168.0.84
-      - DB_USER=root
-      - DB_PASSWORD=Xtr@ckR00tDB
-      - DB_DATABASE=xxtractdb03
+      - DB_HOST=${DB_HOST:-db}
+      - DB_USER=${DB_USER:-root}
+      - DB_PASSWORD=${DB_PASSWORD:-Xtr@ckR00tDB}
+      - DB_DATABASE=${DB_DATABASE:-xxtractdb03}
       - PORT=3000
-      - SERVICES_API_URL=http://catalog.xxtract.test/api/tradeitemservice/metadata
-      - MCP_ENDPOINT=http://localhost:3001/mcp
-      - LABELPRINTER_API_URL=http://labelprint.xxtract.test/api/inbound
-      - NODE_ENV=production
+      - SERVICES_API_URL=${SERVICES_API_URL:-http://catalog.xxtract.test/api/tradeitemservice/metadata}
+      - LABELPRINTER_API_URL=${LABELPRINTER_API_URL:-http://labelprint.xxtract.test/api/inbound}
+      - NODE_ENV=${NODE_ENV:-production}
     restart: unless-stopped
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8.0
+    container_name: ontvangst_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-Xtr@ckR00tDB}
+      - MYSQL_DATABASE=${DB_DATABASE:-xxtractdb03}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - '3306:3306'
+    networks:
+      - app-network
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+
+networks:
+  app-network:
+    driver: bridge
