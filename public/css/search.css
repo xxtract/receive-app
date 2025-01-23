@@ -1,0 +1,81 @@
+/* Search functionality styles */
+.search-container {
+    margin: 20px 0;
+    position: relative;
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    position: relative;
+    width: fit-content;
+    margin-bottom: 10px;
+}
+
+#companyDropdown {
+    display: none;
+    min-width: 400px;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-top: 5px;
+}
+
+.company-option {
+    padding: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    transition: all 0.2s ease;
+    outline: none;
+    white-space: nowrap;
+    border-left: 3px solid transparent;
+}
+
+.company-option:hover {
+    background-color: #f8f9fa;
+    border-left-color: #6c757d;
+}
+
+/* Style for keyboard-selected dropdown item */
+.company-option.selected {
+    background-color: #e9ecef;
+    border-left-color: #007bff;
+    font-weight: 500;
+}
+
+.company-option:last-child {
+    border-bottom: none;
+}
+
+/* GTIN search box specific styles */
+#gtinSearchBox {
+    margin-top: 10px;
+}
+
+#gtinSearchBox input {
+    background-color: #fff;
+}
+
+#gtinSearchBox input:focus {
+    background-color: #fff;
+}
+
+/* Ensure dropdown options are clearly visible when focused/selected */
+.company-option:focus-visible {
+    outline: 2px solid #007bff;
+    outline-offset: -2px;
+}
+
+/* Add a subtle hover effect for better visual feedback */
+.company-option:hover:not(.selected) {
+    background-color: #f8f9fa;
+    border-left-color: #6c757d;
+}

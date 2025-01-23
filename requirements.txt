@@ -1,0 +1,27 @@
+# Production Dependencies
+express@4.18.2    # Web framework
+cors@2.8.5        # Cross-Origin Resource Sharing middleware
+dotenv@16.3.1     # Environment variables management
+mysql2@3.11.5     # MySQL database driver
+xlsx@0.20.1       # Excel file generation library
+
+# Development Dependencies
+@babel/core@7.23.7       # JavaScript compiler
+@babel/preset-env@7.23.7 # Babel preset for environment
+jest@29.7.0             # Testing framework
+supertest@6.3.3         # HTTP testing library
+
+# Optional Development Tools
+nodemon               # Development server with auto-reload
+
+# Frontend Libraries (CDN)
+xlsx@0.20.1          # SheetJS library for Excel file handling (via CDN in index.html)
+
+# Installation Instructions
+1. Install Node.js dependencies:
+   npm install
+
+2. For development:
+   npm install --save-dev
+
+3. The xlsx library is included via CDN in index.html, no additional installation needed

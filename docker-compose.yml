@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ontvangst_app
+    ports:
+      - '3000:3000'
+    environment:
+      - DB_HOST=192.168.0.84
+      - DB_USER=root
+      - DB_PASSWORD=Xtr@ckR00tDB
+      - DB_DATABASE=xxtractdb03
+      - PORT=3000
+      - SERVICES_API_URL=http://catalog.xxtract.test/api/tradeitemservice/metadata
+      - MCP_ENDPOINT=http://localhost:3001/mcp
+      - LABELPRINTER_API_URL=http://labelprint.xxtract.test/api/inbound
+      - NODE_ENV=production
+    restart: unless-stopped

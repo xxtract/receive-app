@@ -1,0 +1,19 @@
+/* Main stylesheet that imports all modular CSS files */
+
+/* Base styles */
+@import 'css/base.css';
+
+/* Component-specific styles */
+@import 'css/components.css';
+
+/* Search functionality styles */
+@import 'css/search.css';
+
+/* Table styles */
+@import 'css/table.css';
+
+/* Modal styles */
+@import 'css/modal.css';
+
+/* Animation styles */
+@import 'css/animations.css';

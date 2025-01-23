@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ontvangst</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css">
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="main-container">
+        <div class="search-container">
+            <div class="search-section">
+                <div class="top-row">
+                    <!-- Company search box -->
+                    <div class="search-box">
+                        <input 
+                            type="text" 
+                            id="searchTerm" 
+                            placeholder="Voer GLN nummer of bedrijfsnaam in" 
+                            autocomplete="off"
+                            aria-expanded="false"
+                            aria-controls="companyDropdown"
+                            aria-haspopup="listbox"
+                            role="combobox"
+                        />
+                        <button class="copy-icon" id="copyIcon" title="Kopieer GLN nummer naar klembord">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                            </svg>
+                        </button>
+                        <div class="spinner" id="searchSpinner"></div>
+                    </div>
+
+                    <!-- Product Counter -->
+                    <div class="counter-container">
+                        <input 
+                            type="text" 
+                            id="productCounter" 
+                            value="0" 
+                            readonly 
+                            class="counter-input"
+                            style="display: none;"
+                        />
+                    </div>
+                </div>
+
+                <!-- GTIN search box and last scanned GTIN -->
+                <div class="gtin-container">
+                    <div class="search-box" id="gtinSearchBox" style="display: none;">
+                        <input
+                            type="text"
+                            id="gtinSearch"
+                            placeholder="Scan GTIN"
+                            autocomplete="off"
+                        />
+                        <div class="spinner" id="gtinSearchSpinner"></div>
+                    </div>
+                    <span id="lastScannedGtin" class="last-scanned-gtin"></span>
+                </div>
+
+                <div id="companyDropdown" 
+                    class="company-dropdown" 
+                    role="listbox" 
+                    tabindex="-1"
+                    aria-label="Bedrijven">
+                </div>
+            </div>
+
+            <!-- Product Information Table -->
+            <div class="product-table-container" id="productTableContainer" style="display: none;">
+                <div class="table-header">
+                    <button class="reception-ready-btn" id="receptionReadyBtn">Ontvangst gereed</button>
+                    <button class="excel-download-btn" id="excelDownloadBtn" title="Download als Excel">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                        </svg>
+                        Excel
+                    </button>
+                </div>
+                <div class="table-wrapper">
+                    <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th width="20"></th>
+                                <th width="20"></th>
+                                <th>GTIN</th>
+                                <th>productomschrijving</th>
+                                <th>verpakkingslaag</th>
+                                <th>inhoud</th>
+                                <th>producttype</th>
+                                <th>extra diensten</th>
+                                <th width="20"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="productTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete Confirmation Modal -->
+        <div id="deleteModal" class="modal-overlay">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Verwijderen</h5>
+                    </div>
+                    <div class="modal-body" id="deleteModalBody">
+                    </div>
+                    <div class="modal-footer">
+                        <button id="deleteCancelButton" class="btn btn-secondary" autofocus>Annuleren</button>
+                        <button id="deleteConfirmButton" class="btn btn-danger">Verwijderen</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Company Change Confirmation Modal -->
+        <div id="confirmModal" class="modal-overlay">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Let op!</h5>
+                    </div>
+                    <div class="modal-body">
+                        De ontvangst wordt geannuleerd als je een nieuwe bedrijf selecteert. De ingescande producten worden niet opgeslagen.
+                        <br><br>
+                        Weet je zeker dat je verder wilt?
+                    </div>
+                    <div class="modal-footer">
+                        <button id="cancelButton" class="btn btn-secondary" autofocus>Annuleren</button>
+                        <button id="confirmButton" class="btn btn-primary">Ja</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services Modal -->
+        <div id="servicesModal" class="modal-overlay">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Bestelde diensten</h5>
+                    </div>
+                    <div class="modal-body" id="servicesModalBody">
+                    </div>
+                    <div class="modal-footer">
+                        <button id="servicesCloseButton" class="btn btn-primary" autofocus>Sluiten</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reception Ready Confirmation Modal -->
+        <div id="receptionReadyModal" class="modal-overlay">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ontvangst afronden</h5>
+                    </div>
+                    <div class="modal-body">
+                        Weet u zeker dat u de ontvangst wilt afronden en opslaan?
+                    </div>
+                    <div class="modal-footer">
+                        <button id="receptionReadyCancelButton" class="btn btn-secondary" autofocus>Annuleren</button>
+                        <button id="receptionReadyConfirmButton" class="btn btn-primary">Ja, afronden</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js?v=0.0.175"></script>
+</body>
+</html>

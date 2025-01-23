@@ -1,0 +1,384 @@
+/* Table styles */
+.product-table-container {
+    margin-top: 10px;
+    width: 100%;
+    overflow-x: auto;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Table header with buttons */
+.table-header {
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+}
+
+.reception-ready-btn,
+.excel-download-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: normal;
+    transition: all 0.2s ease;
+}
+
+.reception-ready-btn {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.reception-ready-btn:not(.disabled):hover {
+    background-color: #138496;
+}
+
+.excel-download-btn {
+    background-color: rgba(108, 117, 125, 0.1);
+    color: #6c757d;
+}
+
+.excel-download-btn:not(.disabled):hover {
+    background-color: #217346;
+    color: white;
+}
+
+.excel-download-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: #6c757d;
+    transition: fill 0.2s ease;
+}
+
+.excel-download-btn:not(.disabled):hover svg {
+    fill: white;
+}
+
+.reception-ready-btn.disabled,
+.excel-download-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: rgba(108, 117, 125, 0.1);
+    color: #6c757d;
+}
+
+/* Table styles */
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: white;
+    table-layout: fixed;
+}
+
+/* Column widths */
+.product-table th:nth-child(1),
+.product-table th:nth-child(2) {
+    width: 20px;
+    min-width: 20px;
+    max-width: 20px;
+}
+
+/* GTIN column */
+.product-table th:nth-child(3) {
+    width: 150px;
+}
+
+/* Product description column */
+.product-table th:nth-child(4) {
+    min-width: 151px;
+}
+
+/* Package layer column */
+.product-table th:nth-child(5) {
+    width: 156px;
+}
+
+/* Other columns */
+.product-table th:nth-child(6),
+.product-table th:nth-child(7),
+.product-table th:nth-child(8) {
+    width: 120px;
+}
+
+/* Printer column */
+.product-table th:nth-child(9) {
+    width: 50px;
+}
+
+.product-table th {
+    background: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: normal;
+    color: #6c757d;
+    border: none;
+    border-bottom: 2px solid #dee2e6;
+}
+
+/* Apply same widths to td elements */
+.product-table td:nth-child(1),
+.product-table td:nth-child(2) {
+    width: 20px;
+    min-width: 20px;
+    max-width: 20px;
+}
+
+.product-table td:nth-child(3) {
+    width: 150px;
+}
+
+.product-table td:nth-child(4) {
+    min-width: 151px;
+}
+
+.product-table td:nth-child(5) {
+    width: 156px;
+}
+
+.product-table td:nth-child(6),
+.product-table td:nth-child(7),
+.product-table td:nth-child(8) {
+    width: 120px;
+}
+
+.product-table td:nth-child(9) {
+    width: 50px;
+}
+
+.product-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    color: #212529;
+}
+
+/* Alternating row colors */
+.product-table tr:nth-child(odd) {
+    background-color: #f8f9fa !important;
+}
+
+.product-table tr:nth-child(even) {
+    background-color: white !important;
+}
+
+.product-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Table dropdown styles */
+.package-layer-cell {
+    position: relative;
+}
+
+.table-dropdown {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: white;
+    color: #495057;
+    font-size: 14px;
+    line-height: 1.5;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+select.table-dropdown {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    padding-right: 32px;
+}
+
+/* Ensure dropdown list appears above other content */
+select.table-dropdown:focus {
+    position: relative;
+    z-index: 1000;
+}
+
+/* Constrain dropdown width */
+select.table-dropdown option {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.table-dropdown:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.table-dropdown option {
+    padding: 8px;
+    white-space: nowrap;
+}
+
+/* Empty dropdown style */
+select.table-dropdown:required:has(option[value=""]:checked) {
+    border-color: rgba(220, 53, 69, 0.7);
+}
+
+/* Trash icon styles */
+.trash-icon {
+    width: 20px;
+    height: 20px;
+    fill: #6c757d;
+    opacity: 0.5;
+}
+
+.product-table td:first-child {
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.product-table td:first-child:hover {
+    background-color: #f8d7da;
+}
+
+.product-table td:first-child:hover .trash-icon {
+    fill: #dc3545;
+    opacity: 1;
+}
+
+/* Product grouping styles */
+.bracket-cell {
+    width: 20px;
+    position: relative;
+    padding: 0 !important;
+}
+
+.bracket {
+    position: absolute;
+    width: 12px;
+    right: 0;
+    margin-right: 8px;
+}
+
+.bracket-top {
+    top: 50%;
+    height: 50%;
+    position: absolute;
+    border-left: 2px solid rgba(108, 117, 125, 0.7);
+}
+
+.bracket-top::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 2px;
+    background-color: rgba(108, 117, 125, 0.7);
+}
+
+.bracket-bottom {
+    bottom: 50%;
+    height: 50%;
+    position: absolute;
+    border-left: 2px solid rgba(108, 117, 125, 0.7);
+}
+
+.bracket-bottom::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 20px;
+    height: 2px;
+    background-color: rgba(108, 117, 125, 0.7);
+}
+
+.bracket-middle {
+    height: 100%;
+    position: absolute;
+    border-left: 2px solid rgba(108, 117, 125, 0.7);
+}
+
+/* Product group styles */
+.product-group {
+    background-color: inherit !important;
+}
+
+.product-table td.gtin-cell {
+    cursor: pointer;
+    transition: background-color 0.2s;
+    padding-right: 0 !important;
+    color: #193242 !important;
+}
+
+.gtin-cell:hover {
+    background-color: #f0f0f0;
+}
+
+/* Row highlight styles */
+.row-highlight-error {
+    background-color: #f8d7da !important;
+    transition: background-color 0.3s ease;
+}
+
+.row-highlight-success {
+    background-color: #d4edda !important;
+    transition: background-color 0.3s ease;
+}
+
+/* Unrecognized GTIN style */
+.unrecognized-gtin {
+    position: relative;
+}
+
+.unrecognized-gtin td:first-child {
+    box-shadow: inset 4px 0 0 rgba(220, 53, 69, 0.7);
+}
+
+/* Service icons styles */
+.services-cell {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.service-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    border: 1px solid #dee2e6;
+}
+
+.service-icon i {
+    font-size: 20px;
+}
+
+.service-icon.active {
+    background-color: #17a2b8;
+    color: white;
+    border-color: #17a2b8;
+}
+
+.service-icon:not(.active) {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border-color: #dee2e6;
+}
+
+.service-icon:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
